@@ -65,11 +65,9 @@ class SitemapScraper extends CheerioCrawler {
 }
 
 const runScraper = async (input) => {
+    const { sitemapUrls } = input;
     // Create a RequestList
-    const requestList = await Apify.openRequestList('start-urls', [
-        { url: 'https://apify.com/sitemap.xml' },
-        { url: 'https://auts.cz/sitemap.xml' },
-    ]);
+    const requestList = await Apify.openRequestList('start-urls', sitemapUrls);
     const requestQueue = await Apify.openRequestQueue();
     // Function called for each URL
     // Create a CheerioCrawler
