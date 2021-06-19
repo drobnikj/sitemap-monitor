@@ -4,7 +4,7 @@ const {
     createHash,
 } = require('crypto');
 
-const { CheerioCrawler } = Apify;
+const { CheerioCrawler, utils: { log } } = Apify;
 
 const createUniqueKeyFromUrl = (url) => {
     const hash = createHash('sha256');
