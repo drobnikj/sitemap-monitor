@@ -1,0 +1,18 @@
+<p>Hey there,<br><br>The monitor for sitemap found changes:</p>
+<p>
+{{#each sitemaps}}
+    <b>Sitemap - {{this.url}}:</b><br>
+    <ul class="list">
+        {{#each this.newUrls}}
+            <li>{{this}} (new)</li>
+        {{/each}}
+        {{#each this.removedUrls}}
+            <li>{{this}} (removed)</li>
+        {{/each}}
+        {{#each this.lastModifiedChangedUrls}}
+            <li>{{this}} (changed)</li>
+        {{/each}}
+    </ul>
+    <br>
+{{/each}}
+</p>

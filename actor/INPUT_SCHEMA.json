@@ -1,0 +1,41 @@
+{
+    "title": "Input schema for the sitemap monitor.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "sitemapUrls": {
+            "title": "Sitemap URLs",
+            "type": "array",
+            "description": "URLs of sitemap to monitor",
+            "prefill": [
+                {
+                    "url": "http://example.com/sitemap.xml"
+                }
+            ],
+            "editor": "requestListSources"
+        },
+        "emailNotification": {
+            "title": "Email address for notification",
+            "type": "string",
+            "description": "Email address where you want to get the notification",
+            "editor": "textfield",
+            "example": "john@gmail.com"
+        },
+        "isRecursive": {
+            "title": "Recursive crawling",
+            "type": "boolean",
+            "description": "If checked then scraper visit all parent sitemaps and include them in monitor.e",
+            "default": false
+        },
+        "monitor": {
+            "title": "Monitor changes",
+            "type": "string",
+            "description": "Select what you want to monitor",
+            "editor": "select",
+            "default": "all",
+            "enum": ["all", "onlyNewUrls", "onlyRemovedUrls", "onlyLastModifiedChanges"],
+            "enumTitles": ["Everything", "Only new URLs", "Only removed URLs", "Only URLs with last modified changes"]
+        }
+    },
+    "required": ["sitemapUrls"]
+}
