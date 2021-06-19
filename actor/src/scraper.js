@@ -15,6 +15,7 @@ const createUniqueKeyFromUrl = (url) => {
 
 async function handlePageFunction({ request, body }) {
     const { url, userData } = request;
+    log.info(`Processing ${url}`);
     // TODO: Enqueue sitemap from robot.txt
     // TODO: sitemap.txt
     const sitemapData = await xml2js.parseStringPromise(body);
@@ -79,7 +80,9 @@ const runScraper = async (input) => {
         handlePageFunction,
         input,
     });
+    log.info('Sitemap scraper started');
     await crawler.run();
+    log.info('Sitemap scraper finished');
     const ddt = await Apify.openDataset();
     const { items } = await ddt.getData();
     const currentState = {

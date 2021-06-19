@@ -4,7 +4,10 @@ const { sendIntro, sendChanges } = require('./emails');
 const { STATE_STORE_NAME, CURRENT_STATE_KEY, PREVIOUS_STATE_KEY } = require('./consts');
 const { runScraper } = require('./scraper');
 
+const { utils: { log } } = Apify;
+
 Apify.main(async () => {
+    log.info('Actor started');
     const input = await Apify.getInput();
     const { emailNotification, sitemapUrls } = input;
     // Run the crawler

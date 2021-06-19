@@ -23,6 +23,7 @@ const sendEmail = async (email) => {
         return;
     }
     await Apify.call('apify/send-mail', email);
+    log.info(`Email send to ${email}`);
 };
 
 const sendIntro = async (emailAddress, sitemapUrls) => {
