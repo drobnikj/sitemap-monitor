@@ -1,5 +1,8 @@
 const compareSitemapsStates = (previousState, currentState) => {
-    const sitemapsChanges = { isChanged: false };
+    const sitemapsChanges = {
+        isChanged: false,
+        sitemaps: {},
+    };
     for (const sitemap of currentState.sitemaps) {
         const changes = {
             newUrls: [],
@@ -25,7 +28,7 @@ const compareSitemapsStates = (previousState, currentState) => {
             }
         });
         sitemapsChanges.isChanged = changes.isChanged || sitemapsChanges.isChanged;
-        sitemapsChanges[sitemap.url] = changes;
+        sitemapsChanges.sitemaps[sitemap.url] = changes;
     }
     return sitemapsChanges;
 };

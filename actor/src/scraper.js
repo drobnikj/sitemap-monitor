@@ -17,6 +17,7 @@ async function handlePageFunction({ request, body }) {
     const { url, userData } = request;
     log.info(`Processing ${url}`);
     // TODO: Enqueue sitemap from robot.txt
+    // TODO: xml.gz sitemaps
     // TODO: sitemap.txt
     const sitemapData = await xml2js.parseStringPromise(body);
     const isSitemapIndex = !!sitemapData.sitemapindex;

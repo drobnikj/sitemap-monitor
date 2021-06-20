@@ -42,7 +42,7 @@ const sendChanges = async (emailAddress, sitemapUrls, sitemapsChanges) => {
     const email = {
         to: emailAddress,
         subject: `Sitemap changes monitor: ${hostnames.join(', ')}`,
-        html: emailTemplate({ sitemaps: Object.keys(sitemapsChanges).map((url) => ({ ...sitemapsChanges[url], url })) }),
+        html: emailTemplate({ sitemaps: Object.keys(sitemapsChanges.sitemaps).map((url) => ({ ...sitemapsChanges.sitemaps[url], url })) }),
     };
     await sendEmail(email);
 };
