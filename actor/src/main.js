@@ -7,9 +7,11 @@ const { runScraper } = require('./scraper');
 const { utils: { log } } = Apify;
 
 Apify.main(async () => {
-    log.info('Actor started');
     const input = await Apify.getInput();
-    const { emailNotification, sitemapUrls } = input;
+    log.info('Actor started with input', input);
+    const { emailNotification, sitemapUrls, skipIntroEmail = false } = input;
+    // TODO: sitemapUrls array is destructed during request list initialization -> create issue in apify-js
+    const urlsForMail = sitemapUrls.map((i) => i);
     // Run the crawler
     const { currentState } = await runScraper(input);
     // Compare sitemaps states
@@ -19,12 +21,14 @@ Apify.main(async () => {
     if (previousState) {
         sitemapsChanges = compareSitemapsStates(previousState, currentState);
         await stateStore.setValue(PREVIOUS_STATE_KEY, previousState);
+    } else if (skipIntroEmail) {
+        log.info('Skipping sending intro email.');
     } else {
         // Send the first email
-        await sendIntro(emailNotification, sitemapUrls);
+        await sendIntro(emailNotification, urlsForMail);
     }
     if (sitemapsChanges && sitemapsChanges.isChanged) {
-        await sendChanges(emailNotification, sitemapUrls, sitemapsChanges);
+        await sendChanges(emailNotification, urlsForMail, sitemapsChanges);
     }
     await stateStore.setValue(CURRENT_STATE_KEY, currentState);
     await Apify.setValue('OUTPUT', sitemapsChanges);

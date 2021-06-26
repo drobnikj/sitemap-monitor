@@ -14,6 +14,7 @@ const uniqueHostnames = (urls) => {
         const parsedUrl = new URL(url);
         hostNames.add(parsedUrl.hostname);
     });
+
     return Array.from(hostNames);
 };
 
@@ -51,4 +52,5 @@ module.exports = {
     sendEmail,
     sendChanges,
     sendIntro,
+    uniqueHostnames,
 };

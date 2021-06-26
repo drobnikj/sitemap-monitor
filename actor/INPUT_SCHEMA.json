@@ -27,6 +27,12 @@
             "description": "If checked then scraper visit all parent sitemaps and include them in monitor.e",
             "default": false
         },
+        "skipIntroEmail": {
+            "title": "Skip intro email",
+            "type": "boolean",
+            "description": "If checked then scraper do not send mail during the first run.",
+            "default": false
+        },
         "monitor": {
             "title": "Monitor changes",
             "type": "string",
