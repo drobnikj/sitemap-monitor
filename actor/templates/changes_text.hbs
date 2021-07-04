@@ -1,9 +1,5 @@
-{{#unless skipGreeting}}
-    <p>Hey there,<br><br>The monitor for sitemap found changes:</p>
-{{/unless}}
 <p>
 {{#each sitemaps}}
-    <b>Sitemap - {{this.url}}:</b><br>
     <ul class="list">
         {{#each this.newUrls}}
             <li>NEW: {{this}} ({{printChangedDate ../../changeDetails ../../crawledAt this}})</li>
@@ -15,6 +11,5 @@
             <li>CHANGED: {{this}} ({{printChangedDate ../changeDetails ../../crawledAt this true}})</li>
         {{/each}}
     </ul>
-    <br>
 {{/each}}
 </p>

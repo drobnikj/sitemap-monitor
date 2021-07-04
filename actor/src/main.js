@@ -1,7 +1,7 @@
 const Apify = require('apify');
 const { compareSitemapsStates } = require('./sitemap');
-const { sendIntro, sendChanges } = require('./emails');
-const { STATE_STORE_NAME, CURRENT_STATE_KEY, PREVIOUS_STATE_KEY } = require('./consts');
+const { sendIntro, sendAndLogChanges } = require('./emails');
+const { STATE_STORE_NAME, CURRENT_STATE_KEY, PREVIOUS_STATE_KEY, LOG_DATASET_NAME } = require('./consts');
 const { runScraper } = require('./scraper');
 
 const { utils: { log } } = Apify;
@@ -28,7 +28,8 @@ Apify.main(async () => {
         await sendIntro(emailNotification, urlsForMail);
     }
     if (sitemapsChanges && sitemapsChanges.isChanged) {
-        await sendChanges(emailNotification, urlsForMail, sitemapsChanges);
+        const logDataset = await Apify.openDataset(LOG_DATASET_NAME);
+        await sendAndLogChanges(emailNotification, urlsForMail, sitemapsChanges, logDataset);
     }
     await stateStore.setValue(CURRENT_STATE_KEY, currentState);
     await Apify.setValue('OUTPUT', sitemapsChanges);

@@ -3,6 +3,7 @@ const path = require('path');
 const Apify = require('apify');
 const Handlebars = require('handlebars');
 const moment = require('moment');
+const { convert } = require('html-to-text');
 
 const { utils: { log } } = Apify;
 
@@ -24,6 +25,9 @@ Handlebars.registerHelper('printChangedDate', (changeDetails, crawledAt, url, is
 
 const templateSource = fs.readFileSync(path.join(__dirname, `../templates/changes_email.hbs`));
 const emailTemplate = Handlebars.compile(templateSource.toString());
+
+const templateTextSource = fs.readFileSync(path.join(__dirname, `../templates/changes_text.hbs`));
+const textTemplate = Handlebars.compile(templateTextSource.toString());
 
 const uniqueHostnames = (urls) => {
     const hostNames = new Set();
@@ -55,7 +59,7 @@ const sendIntro = async (emailAddress, sitemapUrls) => {
     await sendEmail(email);
 };
 
-const sendChanges = async (emailAddress, sitemapUrls, sitemapsChanges) => {
+const sendAndLogChanges = async (emailAddress, sitemapUrls, sitemapsChanges, logDataset) => {
     const hostnames = uniqueHostnames(sitemapUrls);
     let changeDetails = {};
     Object.keys(sitemapsChanges.sitemaps).forEach((url) => {
@@ -72,12 +76,16 @@ const sendChanges = async (emailAddress, sitemapUrls, sitemapsChanges) => {
         subject: `Sitemap changes monitor: ${hostnames.join(', ')}`,
         html: emailTemplate(context),
     };
-    await sendEmail(email);
+    const changesText = convert(textTemplate({ ...context, skipGreeting: true }));
+    await Promise.all([
+        logDataset.pushData({ createdAt: new Date(), sitemap: hostnames.join(', '), changes: changesText }),
+        sendEmail(email),
+    ]);
 };
 
 module.exports = {
     sendEmail,
-    sendChanges,
+    sendAndLogChanges,
     sendIntro,
     uniqueHostnames,
 };
