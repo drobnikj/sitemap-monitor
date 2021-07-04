@@ -38,10 +38,22 @@ describe('sitemap compareSitemapStates() works', () => {
             lastModified: '2021-06-14T00:00:00+00:00',
         };
         const sitemapChanges = compareSitemapsStates({ sitemaps: [sitemapState] }, { sitemaps: [changedSitemapState] });
-        const changes = sitemapChanges[sitemapState.url];
+        const changes = sitemapChanges.sitemaps[sitemapState.url];
+        expect(sitemapChanges.isChanged).toBe(true);
         expect(changes.isChanged).toBe(true);
         expect(changes.newUrls).toStrictEqual([newUrl]);
+        expect(changes.changeDetails[newUrl]).toEqual({
+            url: newUrl,
+        });
         expect(changes.removedUrls).toStrictEqual([removedUrl]);
+        expect(changes.changeDetails[removedUrl]).toEqual({
+            url: removedUrl,
+        });
         expect(changes.lastModifiedChangedUrls).toStrictEqual([changedLastModifiedUrl]);
+        expect(changes.changeDetails[changedLastModifiedUrl]).toStrictEqual({
+            url: changedLastModifiedUrl,
+            lastModified: '2021-06-14T00:00:00+00:00',
+            lastModifiedPrevious: '2021-06-12T00:00:00+00:00',
+        });
     });
 });
