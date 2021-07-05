@@ -78,7 +78,7 @@ const sendAndLogChanges = async (emailAddress, sitemapUrls, sitemapsChanges, log
     };
     const changesText = convert(textTemplate({ ...context, skipGreeting: true }));
     await Promise.all([
-        logDataset.pushData({ createdAt: new Date(), sitemap: hostnames.join(', '), changes: changesText }),
+        logDataset.pushData({ createdAt: new Date(), sitemapUrls: sitemapUrls.join('\n'), sitemap: hostnames.join(', '), changes: changesText }),
         sendEmail(email),
     ]);
 };
