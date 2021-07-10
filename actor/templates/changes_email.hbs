@@ -8,35 +8,35 @@
         <tr>
             <th style="border: 1px solid #dddddd;">Change</th>
             <th style="border: 1px solid #dddddd;">URL</th>
-            <th style="border: 1px solid #dddddd;">Previously Crawled</th>
             <th style="border: 1px solid #dddddd;">Crawled</th>
             <th style="border: 1px solid #dddddd;">Last Modification</th>
+            <th style="border: 1px solid #dddddd;">Previous Modification</th>
         </tr>
         {{#each this.newUrls}}
             <tr>
                 <td style="border: 1px solid #dddddd;">NEW</td>
                 <td style="border: 1px solid #dddddd;">{{this}}</td>
-                <td style="border: 1px solid #dddddd;">{{printDate ../../previouslyCrawledAt}}</td>
                 <td style="border: 1px solid #dddddd;">{{printDate ../../crawledAt}}</td>
-                <td style="border: 1px solid #dddddd;">{{printChangedDate ../../changeDetails ../../crawledAt this false}}</td>
+                <td style="border: 1px solid #dddddd;">{{printChangedDate ../../changeDetails ../../crawledAt this}}</td>
+                <td style="border: 1px solid #dddddd;">{{printPrevChangedDate ../../changeDetails ../../crawledAt this}}</td>
             </tr>
         {{/each}}
         {{#each this.removedUrls}}
             <tr style="border: 1px solid #dddddd;">
                 <td style="border: 1px solid #dddddd;">REMOVED</td>
                 <td style="border: 1px solid #dddddd;">{{this}}</td>
-                <td style="border: 1px solid #dddddd;">{{printDate ../../previouslyCrawledAt}}</td>
                 <td style="border: 1px solid #dddddd;">{{printDate ../../crawledAt}}</td>
-                <td style="border: 1px solid #dddddd;">{{printChangedDate ../../changeDetails ../../crawledAt this false}}</td>
+                <td style="border: 1px solid #dddddd;">{{printChangedDate ../../changeDetails ../../crawledAt this}}</td>
+                <td style="border: 1px solid #dddddd;">{{printPrevChangedDate ../../changeDetails ../../crawledAt this}}</td>
             </tr>
         {{/each}}
         {{#each this.lastModifiedChangedUrls}}
             <tr>
                 <td style="border: 1px solid #dddddd;">CHANGED</td>
                 <td style="border: 1px solid #dddddd;">{{this}}</td>
-                <td style="border: 1px solid #dddddd;">{{printDate ../../previouslyCrawledAt}}</td>
                 <td style="border: 1px solid #dddddd;">{{printDate ../../crawledAt}}</td>
-                <td style="border: 1px solid #dddddd;">{{printChangedDate ../../changeDetails ../../crawledAt this false}}</td>
+                <td style="border: 1px solid #dddddd;">{{printChangedDate ../../changeDetails ../../crawledAt this}}</td>
+                <td style="border: 1px solid #dddddd;">{{printPrevChangedDate ../../changeDetails ../../crawledAt this}}</td>
             </tr>
         {{/each}}
     </table>

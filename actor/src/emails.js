@@ -10,9 +10,20 @@ const { utils: { log } } = Apify;
 const printDate = (date) => {
     return moment(date).format('YYYY-MM-DDTHH:mm');
 };
-/**
- * isRemoved - Url is removing change date is crawledAt!
- */
+
+const printPrevChangedDate = (changeDetails, crawledAt, url) => {
+    const { lastModifiedPrevious } = changeDetails[url];
+    if (!lastModifiedPrevious) return 'Empty';
+    let date;
+    try {
+        date = new Date(lastModifiedPrevious);
+    } catch (err) {
+        console.log('Cannot parse date!');
+        console.error(err);
+        return 'Empty';
+    }
+    return printDate(date);
+};
 const printChangedDate = (changeDetails, crawledAt, url) => {
     const { lastModified } = changeDetails[url];
     if (!lastModified) return 'Empty';
@@ -27,6 +38,7 @@ const printChangedDate = (changeDetails, crawledAt, url) => {
     return printDate(date);
 };
 Handlebars.registerHelper('printChangedDate', printChangedDate);
+Handlebars.registerHelper('printPrevChangedDate', printPrevChangedDate);
 Handlebars.registerHelper('printDate', printDate);
 
 const templateSource = fs.readFileSync(path.join(__dirname, `../templates/changes_email.hbs`));
@@ -101,4 +113,5 @@ module.exports = {
     sendIntro,
     uniqueHostnames,
     printChangedDate,
+    printPrevChangedDate,
 };
