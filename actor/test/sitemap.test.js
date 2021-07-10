@@ -37,8 +37,10 @@ describe('sitemap compareSitemapStates() works', () => {
             url: changedLastModifiedUrl,
             lastModified: '2021-06-14T00:00:00+00:00',
         };
-        const sitemapChanges = compareSitemapsStates({ sitemaps: [sitemapState] }, { sitemaps: [changedSitemapState] });
+        const sitemapChanges = compareSitemapsStates({ crawledAt: 'yesterday', sitemaps: [sitemapState] }, { crawledAt: 'today', sitemaps: [changedSitemapState] });
         const changes = sitemapChanges.sitemaps[sitemapState.url];
+        expect(sitemapChanges.crawledAt).toBe('today');
+        expect(sitemapChanges.previousCrawledAt).toBe('yesterday');
         expect(sitemapChanges.isChanged).toBe(true);
         expect(changes.isChanged).toBe(true);
         expect(changes.newUrls).toStrictEqual([newUrl]);

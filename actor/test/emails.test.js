@@ -51,6 +51,6 @@ describe('emails', () => {
             sitemapUrls: 'http://farpeak.com/sitemap.xml',
             sitemap: 'farpeak.com',
         });
-        expect(changes).toContain(`https://www.farpeak.com/home (${moment(new Date('2021-06-29')).format('MMMM Do YYYY, h:mm')})`);
+        expect(changes).toContain(`${moment(new Date('2021-06-29')).format('YYYY-MM-DDTHH:mm')}`);
     });
 });

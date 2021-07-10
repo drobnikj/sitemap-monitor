@@ -1,7 +1,8 @@
 const compareSitemapsStates = (previousState, currentState) => {
     const sitemapsChanges = {
         isChanged: false,
-        crawledAt: new Date(),
+        crawledAt: currentState.crawledAt,
+        previousCrawledAt: previousState.crawledAt,
         sitemaps: {},
     };
     for (const sitemap of currentState.sitemaps) {
@@ -14,6 +15,7 @@ const compareSitemapsStates = (previousState, currentState) => {
         };
         const previousSitemap = previousState.sitemaps.find((i) => i.url === sitemap.url);
         if (!previousSitemap) throw new Error('TODO - Handle this');
+        // TODO: Maybe compare sitemap extensions as well - https://developers.google.com/search/docs/advanced/sitemaps/image-sitemaps
         Object.values(sitemap.content).forEach(({ url, lastModified }) => {
             if (!previousSitemap.content[url]) {
                 changes.isChanged = true;

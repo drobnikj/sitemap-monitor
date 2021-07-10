@@ -7,22 +7,27 @@ const { convert } = require('html-to-text');
 
 const { utils: { log } } = Apify;
 
+const printDate = (date) => {
+    return moment(date).format('YYYY-MM-DDTHH:mm');
+};
 /**
  * isRemoved - Url is removing change date is crawledAt!
  */
-const printChangedDate = (changeDetails, crawledAt, url, isRemoved = false) => {
+const printChangedDate = (changeDetails, crawledAt, url) => {
     const { lastModified } = changeDetails[url];
+    if (!lastModified) return 'Empty';
     let date;
     try {
-        date = lastModified && !isRemoved ? new Date(lastModified) : new Date(crawledAt);
+        date = new Date(lastModified);
     } catch (err) {
         console.log('Cannot parse date!');
         console.error(err);
-        date = new Date(crawledAt);
+        return 'Empty';
     }
-    return moment(date).format('MMMM Do YYYY, h:mm');
+    return printDate(date);
 };
 Handlebars.registerHelper('printChangedDate', printChangedDate);
+Handlebars.registerHelper('printDate', printDate);
 
 const templateSource = fs.readFileSync(path.join(__dirname, `../templates/changes_email.hbs`));
 const emailTemplate = Handlebars.compile(templateSource.toString());
@@ -68,6 +73,7 @@ const sendAndLogChanges = async (emailAddress, sitemapUrls, sitemapsChanges, log
     });
     const context = {
         crawledAt: sitemapsChanges.crawledAt,
+        previousCrawledAt: sitemapsChanges.previousCrawledAt,
         sitemaps: Object.keys(sitemapsChanges.sitemaps).map((url) => ({ ...sitemapsChanges.sitemaps[url], url })),
         changeDetails,
         sitemapsChanges,

@@ -2,13 +2,13 @@
 {{#each sitemaps}}
     <ul class="list">
         {{#each this.newUrls}}
-            <li>NEW: {{this}} ({{printChangedDate ../../changeDetails ../../crawledAt this false}})</li>
+            <li>NEW | {{this}} | {{printDate ../../previouslyCrawledAt}} | {{printDate ../../crawledAt}} | {{printChangedDate ../../changeDetails ../../crawledAt this}}</li>
         {{/each}}
         {{#each this.removedUrls}}
-            <li>REMOVED: {{this}} ({{printChangedDate ../changeDetails ../../crawledAt this true}})</li>
+            <li>REMOVED | {{this}} | {{printDate ../../previouslyCrawledAt}} | {{printDate ../../crawledAt}} | {{printChangedDate ../../changeDetails ../../crawledAt this}}</li>
         {{/each}}
         {{#each this.lastModifiedChangedUrls}}
-            <li>CHANGED: {{this}} ({{printChangedDate ../changeDetails ../../crawledAt this false}})</li>
+            <li>CHANGED | {{this}} | {{printDate ../../previouslyCrawledAt}} | {{printDate ../../crawledAt}} | {{printChangedDate ../../changeDetails ../../crawledAt this}}</li>
         {{/each}}
     </ul>
 {{/each}}
