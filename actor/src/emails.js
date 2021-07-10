@@ -10,7 +10,7 @@ const { utils: { log } } = Apify;
 /**
  * isRemoved - Url is removing change date is crawledAt!
  */
-Handlebars.registerHelper('printChangedDate', (changeDetails, crawledAt, url, isRemoved = false) => {
+const printChangedDate = (changeDetails, crawledAt, url, isRemoved = false) => {
     const { lastModified } = changeDetails[url];
     let date;
     try {
@@ -21,7 +21,8 @@ Handlebars.registerHelper('printChangedDate', (changeDetails, crawledAt, url, is
         date = new Date(crawledAt);
     }
     return moment(date).format('MMMM Do YYYY, h:mm');
-});
+};
+Handlebars.registerHelper('printChangedDate', printChangedDate);
 
 const templateSource = fs.readFileSync(path.join(__dirname, `../templates/changes_email.hbs`));
 const emailTemplate = Handlebars.compile(templateSource.toString());
@@ -93,4 +94,5 @@ module.exports = {
     sendAndLogChanges,
     sendIntro,
     uniqueHostnames,
+    printChangedDate,
 };

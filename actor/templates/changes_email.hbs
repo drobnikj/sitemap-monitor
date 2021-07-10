@@ -6,13 +6,13 @@
     <b>Sitemap - {{this.url}}:</b><br>
     <ul class="list">
         {{#each this.newUrls}}
-            <li>NEW: {{this}} ({{printChangedDate ../../changeDetails ../../crawledAt this}})</li>
+            <li>NEW: {{this}} ({{printChangedDate ../../changeDetails ../../crawledAt this false}})</li>
         {{/each}}
         {{#each this.removedUrls}}
-            <li>REMOVED: {{this}} ({{printChangedDate ../changeDetails ../../crawledAt this}})</li>
+            <li>REMOVED: {{this}} ({{printChangedDate ../changeDetails ../../crawledAt this true}})</li>
         {{/each}}
         {{#each this.lastModifiedChangedUrls}}
-            <li>CHANGED: {{this}} ({{printChangedDate ../changeDetails ../../crawledAt this true}})</li>
+            <li>CHANGED: {{this}} ({{printChangedDate ../changeDetails ../../crawledAt this false}})</li>
         {{/each}}
     </ul>
     <br>
