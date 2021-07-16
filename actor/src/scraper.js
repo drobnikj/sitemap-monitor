@@ -84,6 +84,7 @@ const runScraper = async (input) => {
     log.info('Sitemap scraper finished');
     const ddt = await Apify.openDataset();
     const { items } = await ddt.getData();
+    if (items.length === 0) throw new Error('There is no sitemap to scrape!');
     const currentState = {
         crawledAt: new Date(),
         sitemaps: items,
