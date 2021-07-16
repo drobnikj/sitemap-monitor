@@ -75,7 +75,7 @@ const runScraper = async (input) => {
     const crawler = new SitemapScraper({
         requestList,
         requestQueue,
-        additionalMimeTypes: ['application/xml', 'text/xml'],
+        additionalMimeTypes: ['application/xml', 'text/xml', 'application/rss+xml'],
         handlePageFunction,
         input,
     });

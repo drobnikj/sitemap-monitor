@@ -14,36 +14,39 @@ const compareSitemapsStates = (previousState, currentState) => {
             isChanged: false,
         };
         const previousSitemap = previousState.sitemaps.find((i) => i.url === sitemap.url);
-        if (!previousSitemap) throw new Error('TODO - Handle this');
-        // TODO: Maybe compare sitemap extensions as well - https://developers.google.com/search/docs/advanced/sitemaps/image-sitemaps
-        Object.values(sitemap.content).forEach(({ url, lastModified }) => {
-            if (!previousSitemap.content[url]) {
-                changes.isChanged = true;
-                changes.newUrls.push(url);
-                changes.changeDetails[url] = {
-                    url,
-                    lastModified,
-                };
-            } else if (lastModified && (previousSitemap.content[url].lastModified !== lastModified)) {
-                changes.isChanged = true;
-                changes.lastModifiedChangedUrls.push(url);
-                changes.changeDetails[url] = {
-                    url,
-                    lastModified,
-                    lastModifiedPrevious: previousSitemap.content[url].lastModified,
-                };
-            }
-        });
-        Object.values(previousSitemap.content).forEach(({ url, lastModified }) => {
-            if (!sitemap.content[url]) {
-                changes.isChanged = true;
-                changes.removedUrls.push(url);
-                changes.changeDetails[url] = {
-                    url,
-                    lastModified,
-                };
-            }
-        });
+        if (!previousSitemap) {
+            // TODO: Handle this better
+        } else {
+            // TODO: Maybe compare sitemap extensions as well - https://developers.google.com/search/docs/advanced/sitemaps/image-sitemaps
+            Object.values(sitemap.content).forEach(({ url, lastModified }) => {
+                if (!previousSitemap.content[url]) {
+                    changes.isChanged = true;
+                    changes.newUrls.push(url);
+                    changes.changeDetails[url] = {
+                        url,
+                        lastModified,
+                    };
+                } else if (lastModified && (previousSitemap.content[url].lastModified !== lastModified)) {
+                    changes.isChanged = true;
+                    changes.lastModifiedChangedUrls.push(url);
+                    changes.changeDetails[url] = {
+                        url,
+                        lastModified,
+                        lastModifiedPrevious: previousSitemap.content[url].lastModified,
+                    };
+                }
+            });
+            Object.values(previousSitemap.content).forEach(({ url, lastModified }) => {
+                if (!sitemap.content[url]) {
+                    changes.isChanged = true;
+                    changes.removedUrls.push(url);
+                    changes.changeDetails[url] = {
+                        url,
+                        lastModified,
+                    };
+                }
+            });
+        }
         sitemapsChanges.isChanged = changes.isChanged || sitemapsChanges.isChanged;
         sitemapsChanges.sitemaps[sitemap.url] = changes;
     }
