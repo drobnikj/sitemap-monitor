@@ -41,6 +41,20 @@
             "default": "all",
             "enum": ["all", "onlyNewUrls", "onlyRemovedUrls", "onlyLastModifiedChanges"],
             "enumTitles": ["Everything", "Only new URLs", "Only removed URLs", "Only URLs with last modified changes"]
+        },
+        "excludeUrlsRegexp": {
+            "title": "Exclude URLs",
+            "type": "string",
+            "description": "Exclude URLs by regexp",
+            "example": "^\/trash\/.*",
+            "editor": "textfield"
+        },
+        "includeUrlsRegexp": {
+            "title": "Include URLs",
+            "type": "string",
+            "description": "Include URLs by regexp. By default all URLs are included, if this value is empty.",
+            "example": "^\/posts\/.*",
+            "editor": "textfield"
         }
     },
     "required": ["sitemapUrls"]
