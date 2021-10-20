@@ -58,4 +58,68 @@ describe('sitemap compareSitemapStates() works', () => {
             lastModifiedPrevious: '2021-06-12T00:00:00+00:00',
         });
     });
+
+    test('include and exclude works', () => {
+        const sitemapState = {
+            url: 'https://example.com/sitemap.xml',
+            key: 'aa3c3d4896f26d1cc7b94857a844e3c55a6c5e6a3c9fe3065b50266540f04c5b',
+            isSitemapIndex: false,
+            isUrlSet: true,
+            content: {
+                'https://example.com/store': {
+                    url: 'https://example.com/store',
+                },
+                'https://example.com/pricing/1': {
+                    url: 'https://example.com/pricing/1',
+                    lastModified: '2021-06-12T00:00:00+00:00',
+                },
+                'https://example.com/pricing/2': {
+                    url: 'https://example.com/pricing/2',
+                    lastModified: '2021-06-12T00:00:00+00:00',
+                },
+                'https://example.com/pricing/3': {
+                    url: 'https://example.com/pricing/3',
+                    lastModified: '2021-06-12T00:00:00+00:00',
+                },
+                'https://example.com/jobs/1': {
+                    url: 'https://example.com/jobs/1',
+                    lastModified: '2021-06-12T00:00:00+00:00',
+                },
+                'https://example.com/jobs/2': {
+                    url: 'https://example.com/jobs/2',
+                    lastModified: '2021-06-12T00:00:00+00:00',
+                },
+            },
+        };
+        const changedSitemapState = JSON.parse(JSON.stringify(sitemapState));
+        // Exclude
+        delete changedSitemapState.content['https://example.com/jobs/2'];
+        changedSitemapState.content['https://example.com/jobs/3'] = {
+            url: 'https://example.com/jobs/3',
+            lastModified: '2021-06-12T00:00:00+00:00',
+        };
+        const sitemapChanges = compareSitemapsStates(
+            { crawledAt: 'yesterday', sitemaps: [sitemapState] },
+            { crawledAt: 'today', sitemaps: [changedSitemapState] },
+            { excludeUrlsRegexp: '^\/jobs.*' },
+        );
+        expect(sitemapChanges.isChanged).toBe(false);
+        delete changedSitemapState.content['https://example.com/pricing/3'];
+        const sitemapChanges2 = compareSitemapsStates(
+            { crawledAt: 'yesterday', sitemaps: [sitemapState] },
+            { crawledAt: 'today', sitemaps: [changedSitemapState] },
+            { excludeUrlsRegexp: '^\/jobs.*' },
+        );
+        expect(sitemapChanges2.isChanged).toBe(true);
+        expect(sitemapChanges2.sitemaps['https://example.com/sitemap.xml'].removedUrls).toStrictEqual(['https://example.com/pricing/3']);
+        // Include
+        const sitemapChanges3 = compareSitemapsStates(
+            { crawledAt: 'yesterday', sitemaps: [sitemapState] },
+            { crawledAt: 'today', sitemaps: [changedSitemapState] },
+            { includeUrlsRegexp: '^\/jobs.*' },
+        );
+        expect(sitemapChanges3.isChanged).toBe(true);
+        expect(sitemapChanges3.sitemaps['https://example.com/sitemap.xml'].removedUrls).toStrictEqual(['https://example.com/jobs/2']);
+        expect(sitemapChanges3.sitemaps['https://example.com/sitemap.xml'].newUrls).toStrictEqual(['https://example.com/jobs/3']);
+    });
 });

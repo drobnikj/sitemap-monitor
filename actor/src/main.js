@@ -9,7 +9,7 @@ const { utils: { log } } = Apify;
 Apify.main(async () => {
     const input = await Apify.getInput();
     log.info('Actor started with input', input);
-    const { emailNotification, sitemapUrls, skipIntroEmail = false } = input;
+    const { emailNotification, sitemapUrls, skipIntroEmail = false, excludeUrlsRegexp, includeUrlsRegexp } = input;
     // TODO: sitemapUrls array is destructed during request list initialization -> create issue in apify-js
     const urlsForMail = sitemapUrls.map((i) => i);
     // Run the crawler
@@ -19,7 +19,7 @@ Apify.main(async () => {
     const previousState = await stateStore.getValue(CURRENT_STATE_KEY);
     let sitemapsChanges = { isChanged: false };
     if (previousState) {
-        sitemapsChanges = compareSitemapsStates(previousState, currentState);
+        sitemapsChanges = compareSitemapsStates(previousState, currentState, { includeUrlsRegexp, excludeUrlsRegexp });
         await stateStore.setValue(PREVIOUS_STATE_KEY, previousState);
     } else if (skipIntroEmail) {
         log.info('Skipping sending intro email.');
