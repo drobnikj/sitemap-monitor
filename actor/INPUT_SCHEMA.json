@@ -47,7 +47,7 @@
             "type": "string",
             "description": "Exclude URLs by regexp",
             "example": "^\/trash\/.*",
-            "editor": "stringList"
+            "editor": "textfield"
         },
         "includeUrlsRegexp": {
             "title": "Include URLs",
