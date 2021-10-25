@@ -101,14 +101,14 @@ describe('sitemap compareSitemapStates() works', () => {
         const sitemapChanges = compareSitemapsStates(
             { crawledAt: 'yesterday', sitemaps: [sitemapState] },
             { crawledAt: 'today', sitemaps: [changedSitemapState] },
-            { excludeUrlsRegexp: '^\/jobs.*' },
+            { excludeUrlsRegexps: ['^\/jobs.*'] },
         );
         expect(sitemapChanges.isChanged).toBe(false);
         delete changedSitemapState.content['https://example.com/pricing/3'];
         const sitemapChanges2 = compareSitemapsStates(
             { crawledAt: 'yesterday', sitemaps: [sitemapState] },
             { crawledAt: 'today', sitemaps: [changedSitemapState] },
-            { excludeUrlsRegexp: '^\/jobs.*' },
+            { excludeUrlsRegexps: ['^\/jobs.*', '^\/bla.*'] },
         );
         expect(sitemapChanges2.isChanged).toBe(true);
         expect(sitemapChanges2.sitemaps['https://example.com/sitemap.xml'].removedUrls).toStrictEqual(['https://example.com/pricing/3']);
@@ -116,7 +116,7 @@ describe('sitemap compareSitemapStates() works', () => {
         const sitemapChanges3 = compareSitemapsStates(
             { crawledAt: 'yesterday', sitemaps: [sitemapState] },
             { crawledAt: 'today', sitemaps: [changedSitemapState] },
-            { includeUrlsRegexp: '^\/jobs.*' },
+            { includeUrlsRegexps: ['^\/jobs.*', '^\/bla.*'] },
         );
         expect(sitemapChanges3.isChanged).toBe(true);
         expect(sitemapChanges3.sitemaps['https://example.com/sitemap.xml'].removedUrls).toStrictEqual(['https://example.com/jobs/2']);

@@ -55,6 +55,18 @@
             "description": "Include URLs by regexp. By default all URLs are included, if this value is empty.",
             "example": "^\/posts\/.*",
             "editor": "textfield"
+        },
+        "excludeUrlsRegexps": {
+            "title": "Exclude URLs by multiple regexps",
+            "type": "array",
+            "description": "The field is hidden simple regexp is good in UI, but we need to keep this for API",
+            "editor": "hidden"
+        },
+        "includeUrlsRegexps": {
+            "title": "Include URLs by multiple regexps",
+            "type": "array",
+            "description": "The field is hidden simple regexp is good in UI, but we need to keep this for API",
+            "editor": "hidden"
         }
     },
     "required": ["sitemapUrls"]
