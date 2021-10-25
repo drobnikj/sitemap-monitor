@@ -45,28 +45,28 @@
         "excludeUrlsRegexp": {
             "title": "Exclude URLs",
             "type": "string",
-            "description": "Exclude URLs by regexp",
+            "description": "deprecated",
             "example": "^\/trash\/.*",
-            "editor": "textfield"
+            "editor": "hidden"
         },
         "includeUrlsRegexp": {
             "title": "Include URLs",
             "type": "string",
-            "description": "Include URLs by regexp. By default all URLs are included, if this value is empty.",
+            "description": "deprecated",
             "example": "^\/posts\/.*",
-            "editor": "textfield"
+            "editor": "hidden"
         },
         "excludeUrlsRegexps": {
             "title": "Exclude URLs by multiple regexps",
             "type": "array",
-            "description": "The field is hidden simple regexp is good in UI, but we need to keep this for API",
-            "editor": "hidden"
+            "description": "Exclude URLs by regexp",
+            "editor": "stringList"
         },
         "includeUrlsRegexps": {
             "title": "Include URLs by multiple regexps",
             "type": "array",
-            "description": "The field is hidden simple regexp is good in UI, but we need to keep this for API",
-            "editor": "hidden"
+            "description": "Include URLs by regexp. By default all URLs are included, if this value is empty.",
+            "editor": "stringList"
         }
     },
     "required": ["sitemapUrls"]
