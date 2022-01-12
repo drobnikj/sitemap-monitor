@@ -1,7 +1,7 @@
 const Apify = require('apify');
 const { compareSitemapsStates } = require('./sitemap');
 const { sendIntro, sendAndLogChanges } = require('./emails');
-const { STATE_STORE_NAME, CURRENT_STATE_KEY, PREVIOUS_STATE_KEY, LOG_DATASET_NAME } = require('./consts');
+const { STATE_STORE_NAME, CURRENT_STATE_KEY, PREVIOUS_STATE_KEY, LOG_DATASET_NAME, MONITOR_TYPES } = require('./consts');
 const { runScraper } = require('./scraper');
 
 const { utils: { log } } = Apify;
@@ -9,7 +9,7 @@ const { utils: { log } } = Apify;
 Apify.main(async () => {
     const input = await Apify.getInput();
     log.info('Actor started with input', input);
-    const { emailNotification, sitemapUrls, skipIntroEmail = false,
+    const { emailNotification, sitemapUrls, skipIntroEmail = false, monitor = MONITOR_TYPES.ALL_CHANGES,
         excludeUrlsRegexp, includeUrlsRegexp, excludeUrlsRegexps = [], includeUrlsRegexps = [] } = input;
     // User can pass single regexp and as well array of regexp
     if (excludeUrlsRegexp) excludeUrlsRegexps.push(excludeUrlsRegexp);
@@ -23,7 +23,7 @@ Apify.main(async () => {
     const previousState = await stateStore.getValue(CURRENT_STATE_KEY);
     let sitemapsChanges = { isChanged: false };
     if (previousState) {
-        sitemapsChanges = compareSitemapsStates(previousState, currentState, { includeUrlsRegexps, excludeUrlsRegexps });
+        sitemapsChanges = compareSitemapsStates(previousState, currentState, { includeUrlsRegexps, excludeUrlsRegexps, monitor });
         await stateStore.setValue(PREVIOUS_STATE_KEY, previousState);
     } else if (skipIntroEmail) {
         log.info('Skipping sending intro email.');

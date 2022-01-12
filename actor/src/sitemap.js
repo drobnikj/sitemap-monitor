@@ -1,10 +1,12 @@
 const Apify = require('apify');
 const { URL } = require('url');
+const { MONITOR_TYPES: { ALL_CHANGES, ONLY_NEW_URLS, ONLY_REMOVED_URLS, ONLY_LAST_MOD_CHANGES } } = require('./consts');
 
 const { utils: { log } } = Apify;
 
 const compareSitemapsStates = (previousState, currentState, opts = {}) => {
-    const { includeUrlsRegexps, excludeUrlsRegexps } = opts;
+    const { includeUrlsRegexps, excludeUrlsRegexps, monitor = ALL_CHANGES } = opts;
+    const IS_MONITOR_ALL_CHANGES = monitor === ALL_CHANGES;
     const sitemapsChanges = {
         isChanged: false,
         crawledAt: currentState.crawledAt,
@@ -27,15 +29,17 @@ const compareSitemapsStates = (previousState, currentState, opts = {}) => {
             Object.values(sitemap.content)
                 .filter(({ url }) => filterUrl(url, { includeUrlsRegexps, excludeUrlsRegexps }))
                 .forEach(({ url, lastModified }) => {
+                    // Check new URLs
                     if (!previousSitemap.content[url]) {
-                        changes.isChanged = true;
+                        if (IS_MONITOR_ALL_CHANGES || monitor === ONLY_NEW_URLS) changes.isChanged = true;
                         changes.newUrls.push(url);
                         changes.changeDetails[url] = {
                             url,
                             lastModified,
                         };
+                    // Check changed modified URLs
                     } else if (lastModified && (previousSitemap.content[url].lastModified !== lastModified)) {
-                        changes.isChanged = true;
+                        if (IS_MONITOR_ALL_CHANGES || monitor === ONLY_LAST_MOD_CHANGES) changes.isChanged = true;
                         changes.lastModifiedChangedUrls.push(url);
                         changes.changeDetails[url] = {
                             url,
@@ -47,8 +51,9 @@ const compareSitemapsStates = (previousState, currentState, opts = {}) => {
             Object.values(previousSitemap.content)
                 .filter(({ url }) => filterUrl(url, { includeUrlsRegexps, excludeUrlsRegexps }))
                 .forEach(({ url, lastModified }) => {
+                    // Check removed URLs
                     if (!sitemap.content[url]) {
-                        changes.isChanged = true;
+                        if (IS_MONITOR_ALL_CHANGES || monitor === ONLY_REMOVED_URLS) changes.isChanged = true;
                         changes.removedUrls.push(url);
                         changes.changeDetails[url] = {
                             url,
