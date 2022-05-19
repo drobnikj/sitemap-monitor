@@ -1,0 +1,115 @@
+{
+    "crawledAt": "2022-05-19T00:45:35.191Z",
+    "sitemaps": [
+      {
+        "url": "https://freedomac1.com/wp-sitemap.xml",
+        "key": "a24909b1561a6d6ed7061c9891855ad3d8a293caf63b9a3cbf11693533534610",
+        "isSitemapIndex": true,
+        "isUrlSet": false,
+        "content": {
+          "https://freedomac1.com/wp-sitemap-posts-post-1.xml": {
+            "url": "https://freedomac1.com/wp-sitemap-posts-post-1.xml"
+          },
+          "https://freedomac1.com/wp-sitemap-posts-page-1.xml": {
+            "url": "https://freedomac1.com/wp-sitemap-posts-page-1.xml"
+          },
+          "https://freedomac1.com/wp-sitemap-taxonomies-category-1.xml": {
+            "url": "https://freedomac1.com/wp-sitemap-taxonomies-category-1.xml"
+          },
+          "https://freedomac1.com/wp-sitemap-users-1.xml": {
+            "url": "https://freedomac1.com/wp-sitemap-users-1.xml"
+          }
+        }
+      },
+      {
+        "url": "https://freedomac1.com/wp-sitemap-posts-page-1.xml",
+        "key": "e9650d742f0884742a2d49b64fe20a9ed7ae19bc8c35135335d3cd73366f9dee",
+        "isSitemapIndex": false,
+        "isUrlSet": true,
+        "content": {
+          "https://freedomac1.com/privacy-policy/": {
+            "url": "https://freedomac1.com/privacy-policy/"
+          },
+          "https://freedomac1.com/fac1lp/": {
+            "url": "https://freedomac1.com/fac1lp/"
+          },
+          "https://freedomac1.com/about-us/": {
+            "url": "https://freedomac1.com/about-us/"
+          },
+          "https://freedomac1.com/team/": {
+            "url": "https://freedomac1.com/team/"
+          },
+          "https://freedomac1.com/management/": {
+            "url": "https://freedomac1.com/management/"
+          },
+          "https://freedomac1.com/board-observers/": {
+            "url": "https://freedomac1.com/board-observers/"
+          },
+          "https://freedomac1.com/board-of-directors/": {
+            "url": "https://freedomac1.com/board-of-directors/"
+          },
+          "https://freedomac1.com/investor-resources/": {
+            "url": "https://freedomac1.com/investor-resources/"
+          },
+          "https://freedomac1.com/contact-us/": {
+            "url": "https://freedomac1.com/contact-us/"
+          },
+          "https://freedomac1.com/": {
+            "url": "https://freedomac1.com/"
+          },
+          "https://freedomac1.com/blank/": {
+            "url": "https://freedomac1.com/blank/"
+          },
+          "https://freedomac1.com/test-2/": {
+            "url": "https://freedomac1.com/test-2/"
+          },
+          "https://freedomac1.com/investor-center/": {
+            "url": "https://freedomac1.com/investor-center/"
+          },
+          "https://freedomac1.com/confirmation/": {
+            "url": "https://freedomac1.com/confirmation/"
+          }
+        },
+        "parentUrl": "https://freedomac1.com/wp-sitemap.xml"
+      },
+      {
+        "url": "https://freedomac1.com/wp-sitemap-posts-post-1.xml",
+        "key": "cb56972f81f6573ac275280af59425c71484a6e0f3a23f016265450393a2a1f3",
+        "isSitemapIndex": false,
+        "isUrlSet": true,
+        "content": {
+          "https://freedomac1.com/freedom-acquisition-i-corp-announces-pricing-of-upsized-300-million-initial-public-offering/": {
+            "url": "https://freedomac1.com/freedom-acquisition-i-corp-announces-pricing-of-upsized-300-million-initial-public-offering/"
+          },
+          "https://freedomac1.com/billionaire-families-stand-behind-tidjane-thiams-spac/": {
+            "url": "https://freedomac1.com/billionaire-families-stand-behind-tidjane-thiams-spac/"
+          }
+        },
+        "parentUrl": "https://freedomac1.com/wp-sitemap.xml"
+      },
+      {
+        "url": "https://freedomac1.com/wp-sitemap-users-1.xml",
+        "key": "c78e51d5d5adbbf220db61cf99340b849390c6fc128e1846ed79db5f09b9791c",
+        "isSitemapIndex": false,
+        "isUrlSet": true,
+        "content": {
+          "https://freedomac1.com/author/surge/": {
+            "url": "https://freedomac1.com/author/surge/"
+          }
+        },
+        "parentUrl": "https://freedomac1.com/wp-sitemap.xml"
+      },
+      {
+        "url": "https://freedomac1.com/wp-sitemap-taxonomies-category-1.xml",
+        "key": "04690554d6bddd34e01b0acdfb9d6945f207a870205f5b4777c03b478fb8dba1",
+        "isSitemapIndex": false,
+        "isUrlSet": true,
+        "content": {
+          "https://freedomac1.com/category/uncategorized/": {
+            "url": "https://freedomac1.com/category/uncategorized/"
+          }
+        },
+        "parentUrl": "https://freedomac1.com/wp-sitemap.xml"
+      }
+    ]
+  }
