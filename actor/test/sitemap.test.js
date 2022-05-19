@@ -134,7 +134,7 @@ describe('sitemap compareSitemapStates() works', () => {
             changedSitemapState,
         );
         expect(sitemapChanges.isChanged).toBe(false);
-        delete changedSitemapState.sitemaps[0].content['https://freedomac1.com/wp-sitemap-posts-post-1.xml'];
+        delete changedSitemapState.sitemaps[0].content['https://example.com/wp-sitemap-posts-post-1.xml'];
         const sitemapChanges2 = compareSitemapsStates(
             sitemapState,
             changedSitemapState,
