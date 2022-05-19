@@ -45,15 +45,13 @@ async function handlePageFunction({ request, body }) {
         isUrlSet,
         content,
         ...userData,
-        // isRecursive: this.isRecursive,
     });
     // Enqueue child sitemaps
-    // TODO
-    // if (isRecursive && isSitemapIndex) {
-    //     for (const { loc: [siteMapUrl] } of sitemapData.sitemapindex.sitemap) {
-    //         await requestQueue.addRequest({ url: siteMapUrl, userData: { parentUrl: url } });
-    //     }
-    // }
+    if (this.isRecursive && isSitemapIndex) {
+        for (const { loc: [siteMapUrl] } of sitemapData.sitemapindex.sitemap) {
+            await this.requestQueue.addRequest({ url: siteMapUrl, userData: { parentUrl: url } });
+        }
+    }
 }
 
 class SitemapScraper extends CheerioCrawler {
@@ -62,6 +60,7 @@ class SitemapScraper extends CheerioCrawler {
         const { isRecursive = false, monitor = 'all' } = input;
         this.monitor = monitor;
         this.isRecursive = isRecursive;
+        this.requestQueue = options.requestQueue;
     }
 }
 

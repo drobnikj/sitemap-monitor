@@ -1,5 +1,6 @@
 const { compareSitemapsStates } = require('../src/sitemap');
 const { MONITOR_TYPES } = require('../src/consts');
+const testRecursiveSiteMap = require('./test_data/recursive_map.json')
 
 describe('sitemap compareSitemapStates() works', () => {
     test('handle changes', () => {
@@ -122,6 +123,23 @@ describe('sitemap compareSitemapStates() works', () => {
         expect(sitemapChanges3.isChanged).toBe(true);
         expect(sitemapChanges3.sitemaps['https://example.com/sitemap.xml'].removedUrls).toStrictEqual(['https://example.com/jobs/2']);
         expect(sitemapChanges3.sitemaps['https://example.com/sitemap.xml'].newUrls).toStrictEqual(['https://example.com/jobs/3']);
+    });
+
+    test('recursive sitemap', () => {
+        const sitemapState = testRecursiveSiteMap;
+        const changedSitemapState = JSON.parse(JSON.stringify(testRecursiveSiteMap));
+        // Nothing change
+        const sitemapChanges = compareSitemapsStates(
+            sitemapState,
+            changedSitemapState,
+        );
+        expect(sitemapChanges.isChanged).toBe(false);
+        delete changedSitemapState.sitemaps[0].content['https://example.com/wp-sitemap-posts-post-1.xml'];
+        const sitemapChanges2 = compareSitemapsStates(
+            sitemapState,
+            changedSitemapState,
+        );
+        expect(sitemapChanges2.isChanged).toBe(true);
     });
 
     describe('handle monitor parameter', () => {
